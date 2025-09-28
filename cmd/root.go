@@ -4,9 +4,13 @@ import (
 	"fmt"
 	"os"
 
+	"tui-template/internal/screens/form"
+	"tui-template/internal/screens/home"
+	"tui-template/internal/screens/list"
+	"tui-template/internal/screens/router"
+
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/spf13/cobra"
-	"tui-template/internal/models"
 )
 
 var rootCmd = &cobra.Command{
@@ -17,8 +21,18 @@ interactive terminal applications in Go.
 
 Running 'mytui' without arguments will launch the main TUI application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		model := models.NewMainModel()
-		p := tea.NewProgram(model, tea.WithAltScreen())
+		r := router.New(
+			map[string]tea.Model{
+				"home": home.New(),
+				"form": form.New(),
+				"list": list.New(),
+			},
+			router.Options{
+				ReadyView: "home",
+			},
+		)
+
+		p := tea.NewProgram(r, tea.WithAltScreen())
 
 		if _, err := p.Run(); err != nil {
 			fmt.Fprintf(os.Stderr, "Error running TUI: %v\n", err)

@@ -28,11 +28,6 @@ var (
 			Background(Primary).
 			Padding(0, 1)
 
-	BorderStyle = lipgloss.NewStyle().
-			Border(lipgloss.RoundedBorder()).
-			BorderForeground(Border).
-			Padding(1, 2)
-
 	ButtonStyle = lipgloss.NewStyle().
 			Bold(true).
 			Foreground(Foreground).
@@ -74,4 +69,13 @@ var (
 			Background(Border).
 			Foreground(Foreground).
 			Padding(0, 1)
+
+	BorderNone = lipgloss.NewStyle().
+			Foreground(Background).
+			Border(lipgloss.HiddenBorder(), true)
+
+	BorderStyle = lipgloss.NewStyle().
+			Border(lipgloss.RoundedBorder()).
+			BorderForeground(Border)
+	// Padding(1, 2)
 )
